@@ -52,7 +52,7 @@ var WebsocketClass = {
     		"coordinate_z" : y
     	};
     	console.log("g: "+x+", "+y);
-    	//this.ws.Send(message);
+    	this.ws.send(JSON.stringify(message));
     },
 
     sendDelete : function(x, y){

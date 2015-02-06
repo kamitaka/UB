@@ -1,10 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 using WebSocketSharp;
+using LitJson;
 
 public class syncer : MonoBehaviour {
 	// Use this for initialization
 	public GameObject player;
+	public GameObject block;
 	
 	private Queue messageQueue;
 	private WebSocket wss;
@@ -19,7 +21,7 @@ public class syncer : MonoBehaviour {
 		};
 		wss.OnMessage += (o, s) => {
 			string e = s.Data;
-			//LitJson.JsonData jsonData =  LitJson.JsonMapper.ToObject(e);
+//			LitJson.JsonData jsonData =  LitJson.JsonMapper.ToObject(e);
 			//Vector3 pos = ToVector3 (jsonData["position"]);
 			messageQueue.Enqueue (e);
 		};
@@ -33,10 +35,24 @@ public class syncer : MonoBehaviour {
 	void Update(){
 		lock (messageQueue.SyncRoot) {
 			if (messageQueue.Count > 0) {
-				Debug.Log (messageQueue.Dequeue ());
+				var message = messageQueue.Dequeue ();
+				Debug.Log (message);
+				LitJson.JsonData jsonData =  LitJson.JsonMapper.ToObject(message.ToString());
+				string type = (string)jsonData["type"];
+				Debug.Log (type);
+				string position_x = (string)jsonData["coordinate_x"];
+				string position_z = (string)jsonData["coordinate_z"];
+
+				float f_position_x = float.Parse (position_x);
+				float f_position_z = float.Parse (position_z);
+
+				Debug.Log (f_position_x);
+				if (type == "generate") {
+					Instantiate (block,new Vector3(f_position_x,1,f_position_z),block.transform.rotation);
+				}
 			}
 			string jsonText = "{ \"id\" : \"\",  \"position\" : \""+player.transform.position+"\" }";
-			wss.Send(jsonText);
+//			wss.Send(jsonText);
 		}
 	}
 
