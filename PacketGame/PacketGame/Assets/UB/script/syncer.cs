@@ -7,6 +7,7 @@ public class syncer : MonoBehaviour {
 	// Use this for initialization
 	public GameObject player;
 	public GameObject block;
+	public GameObject[] blocks;
 	
 	private Queue messageQueue;
 	private WebSocket wss;
@@ -47,8 +48,11 @@ public class syncer : MonoBehaviour {
 				float f_position_z = float.Parse (position_z);
 
 				Debug.Log (f_position_x);
+				int block_num = 0;
 				if (type == "generate") {
-					Instantiate (block,new Vector3(f_position_x,1,f_position_z),block.transform.rotation);
+//					blocks[block_num] = new GameObject("block_" + block_num);
+					blocks[block_num]=(GameObject)Instantiate (block,new Vector3(f_position_x,1,f_position_z),block.transform.rotation) as GameObject;
+					block_num++;
 				}
 			}
 			string jsonText = "{ \"id\" : \"\",  \"position\" : \""+player.transform.position+"\" }";
