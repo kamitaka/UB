@@ -26,9 +26,10 @@ var initialize = {
 
 
 //通信用
+
+kakeru=50;
 var WebsocketClass = {
 	ws : null, 
-
 	websoketInit : function(){
 		this.ws = new WebSocket("ws://157.7.65.203:3001");
 	     // メッセージ受信時の処理
@@ -36,8 +37,12 @@ var WebsocketClass = {
 	        console.log(event.data);
     	    t = event.data;
     	    obj = JSON.parse(t);
+    	    if(obj.type="position"){
+    	    	document.querySelector("#player").style.top =  (Number(obj.position.split(",")[0])*kakeru+8) +"px";
+    	    	document.querySelector("#player").style.left =  (Number(obj.position.split(",")[1])*kakeru+8) +"px";
+    	    }
     	    console.log(obj.position);
-    	    //document.getElementById("position").innerHTML = obj.position;
+    	    
     	 }
     },
 
