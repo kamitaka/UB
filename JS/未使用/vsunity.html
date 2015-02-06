@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>ruby WebSocket test</title>
+    <style type="text/css">
+      #wdt{
+        word-break:normal
+      }
+      
+    </style>
+  </head>
+  <body>
+    <div id="position"></div>
+     <ul id="chat_area"></ul>
+    <!-- <input id="comment" type="text"> -->
+    <!-- <input id="send" type="button" value="send"> -->
+
+  <script type="text/javascript">
+     var ws = new WebSocket("ws://157.7.65.203:3001");
+      // メッセージ受信時の処理
+      ws.onmessage = function(event){
+        console.log(event.data);
+        t = event.data;
+        obj = JSON.parse(t);
+        console.log(obj.position);
+        document.getElementById("position").innerHTML = obj.position;
+      }
+  </script>
+  </body>
+</html>
