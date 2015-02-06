@@ -199,12 +199,12 @@ var Start = {
 				Start.arrayData.push(1);
 			}
 			console.log(Start.arrayData);
-			Stage.gameStart = true;
 		}
 	},
 
 	main : function(){
 		if(this.ready){
+			Stage.gameStart = true;
 			this.countdownStart();
 		}
 		
