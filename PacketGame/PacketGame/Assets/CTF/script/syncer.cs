@@ -28,7 +28,6 @@ public class syncer : MonoBehaviour {
 	
 	void Start(){
 		num = Random.Range (0, 20);
-		player = GameObject.FindWithTag ("Player");
 	}
 	
 	void Update(){
