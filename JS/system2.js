@@ -31,7 +31,7 @@ kakeru=52;
 var WebsocketClass = {
 	ws : null, 
 	websoketInit : function(){
-		this.ws = new WebSocket("ws://157.7.65.203:3001");
+		this.ws = new WebSocket("ws://192.168.24.57:3001");
 	     // メッセージ受信時の処理
 	     this.ws.onmessage = function(event){
 	        console.log(event.data);
