@@ -55,8 +55,8 @@ public class syncer : MonoBehaviour
 
 										float f_position_x = float.Parse (position_x);
 										float f_position_z = float.Parse (position_z);
-										blocks = (GameObject)Instantiate (block_prefab, new Vector3 (f_position_z, 1, f_position_x), block_prefab.transform.rotation) as GameObject;
-										blocks.transform.name = "block_" + block_num +"/x="+position_x+"/y="+position_z;
+										blocks = (GameObject)Instantiate (block_prefab, new Vector3 (f_position_z, 10, f_position_x), block_prefab.transform.rotation) as GameObject;
+										blocks.transform.name = "block_/x="+position_x+"/y="+position_z;
 										blocks.transform.parent = blockparent.transform;
 										Debug.Log (blocks);
 										block_num++;
@@ -66,6 +66,10 @@ public class syncer : MonoBehaviour
 										if (mode == 2) {
 												blocks.renderer.material.color = Color.red;
 										}
+								}else if(type=="delete"){
+										string position_x = (string)jsonData ["coordinate_x"];
+										string position_z = (string)jsonData ["coordinate_z"];
+										Destroy (GameObject.Find ("block_/x="+position_x+"/y="+position_z));
 								}
 						}
 						string jsonText = "{ \"type\" : \"position\",  \"position\" : \"" + player.transform.position.x + ","+ player.transform.position.z + "\" }";
