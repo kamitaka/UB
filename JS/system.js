@@ -38,8 +38,7 @@ var WebsocketClass = {
     	    t = event.data;
     	    obj = JSON.parse(t);
     	    if(obj.type="position"){
-    	    	document.querySelector("#player").style.top =  (Number(obj.position.split(",")[0])*kakeru+28) +"px";
-    	    	document.querySelector("#player").style.left =  (Number(obj.position.split(",")[1])*kakeru+28) +"px";
+    	    	Player.updateCoordinate((Number(obj.position.split(",")[0])*kakeru+28), (Number(obj.position.split(",")[1])*kakeru+28));
     	    }
     	    console.log(obj.position);
     	    
@@ -56,7 +55,7 @@ var WebsocketClass = {
     		"coordinate_x" : x,
     		"coordinate_z" : y
     	};
-    	console.log("g: "+x+", "+y);
+    	console.log(message);
     	this.ws.send(JSON.stringify(message));
     },
 
@@ -76,7 +75,7 @@ var WebsocketClass = {
 var Mass = {
 	//関数
 	reverse : function(e){
-		if(e.className === "m_void" && Stage.blocks < Stage.maxBlocks){
+		if(e.className === "m_void" && Stage.blocks < Stage.maxBlocks && search.main(e)){
 			Stage.addBlocks(e);
 		}else if(e.className === "m_block"){
 			Stage.deleteBlocks(e);
@@ -158,8 +157,12 @@ var Stage = {
 			this.blocks += 1;
 			document.getElementById("blocks").innerHTML = this.blocks;
 
-			var x = mass.getAttribute("coordinate_x");
-			var y = mass.getAttribute("coordinate_y");
+			var x = Number(mass.getAttribute("coordinate_x"));
+			var y = Number(mass.getAttribute("coordinate_y"));
+			Stage.stageData[Number(x+y*10)] = 1;
+			//console.log(Stage.stageData);
+			
+			//console.log(this.stageData);
 			WebsocketClass.sendGenerate(1, x, y);
 		}
 		
@@ -172,8 +175,9 @@ var Stage = {
 			this.blocks -= 1;
 			document.getElementById("blocks").innerHTML = this.blocks;
 
-			var x = mass.getAttribute("coordinate_x");
-			var y = mass.getAttribute("coordinate_y");
+			var x = Number(mass.getAttribute("coordinate_x"));
+			var y = Number(mass.getAttribute("coordinate_y"));
+			Stage.stageData[Number(x+y*10)] = 0;
 			WebsocketClass.sendDelete(x, y);
 		}
 	},
@@ -184,6 +188,7 @@ var Stage = {
 
 		var x = mass.getAttribute("coordinate_x");
 		var y = mass.getAttribute("coordinate_y");
+		Stage.stageData[x+y*10] = 2;
 		WebsocketClass.sendGenerate(2, x, y);
 	}
 }
@@ -223,5 +228,19 @@ var Start = {
 	countdown : function(){
 		Stage.reduceTimer(0.1);
 		setTimeout("Start.countdown()", 100);
+	}
+}
+
+var Player = {
+	coordinate_x : 0,
+	coordinate_y : 0,
+
+	updateCoordinate : function(x, y){
+		document.querySelector("#player").style.top = x +"px";
+    	document.querySelector("#player").style.left =  y +"px";
+    	this.coordinate_x = Math.floor(Number(x / 52));
+    	this.coordinate_y = Math.floor(Number(y / 52));
+		document.querySelector("#pos_x").innerHTML = this.coordinate_x;
+		document.querySelector("#pos_y").innerHTML = this.coordinate_y;
 	}
 }
