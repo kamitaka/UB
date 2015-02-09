@@ -50,6 +50,7 @@
      <Compile Include="Assets\UB\script\PlayerCharactor.cs" />
      <Compile Include="Assets\UB\script\controller.cs" />
      <Compile Include="Assets\UB\script\syncer.cs" />
+     <Compile Include="Assets\touch_of_death.cs" />
      <Compile Include="Assets\ws.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/GUISystem/4.6.1/UnityEngine.UI.dll</HintPath>

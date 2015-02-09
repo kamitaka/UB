@@ -50,6 +50,7 @@
      <Compile Include="Assets\UB\script\PlayerCharactor.cs" />
      <Compile Include="Assets\UB\script\controller.cs" />
      <Compile Include="Assets\UB\script\syncer.cs" />
+     <Compile Include="Assets\touch_of_death.cs" />
      <Compile Include="Assets\ws.cs" />
  <Reference Include="Assembly-UnityScript-firstpass">
  <HintPath>/Users/takuhojo/Desktop/UB/PacketGame/PacketGame/Library/ScriptAssemblies/Assembly-UnityScript-firstpass.dll</HintPath>
