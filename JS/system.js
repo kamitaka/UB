@@ -67,7 +67,7 @@ var WebsocketClass = {
     		"coordinate_z" : y
     	};
     	console.log("d: "+x+", "+y);
-    	//this.ws.Send(message);
+    	//this.ws.send(JSON.stringify(message));
     }
 }
 
@@ -152,6 +152,7 @@ var Stage = {
 
 	addBlocks : function(mass){
 		if(mass.className === "m_void"){
+			console.log("addBlocks");
 			mass.setAttribute("mode", 1);
 			mass.className = "m_block";
 			this.blocks += 1;
