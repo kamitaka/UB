@@ -55,7 +55,7 @@ public class syncer : MonoBehaviour
 
 										float f_position_x = float.Parse (position_x);
 										float f_position_z = float.Parse (position_z);
-										blocks = (GameObject)Instantiate (block_prefab, new Vector3 (f_position_z, 3, f_position_x), block_prefab.transform.rotation) as GameObject;
+										blocks = (GameObject)Instantiate (block_prefab, new Vector3 (f_position_z, 5, f_position_x), block_prefab.transform.rotation) as GameObject;
 										blocks.transform.name = "block_/x="+position_x+"/y="+position_z;
 										blocks.transform.parent = blockparent.transform;
 										Debug.Log (blocks);
