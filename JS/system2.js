@@ -27,7 +27,7 @@ var initialize = {
 
 //通信用
 
-kakeru=50;
+kakeru=52;
 var WebsocketClass = {
 	ws : null, 
 	websoketInit : function(){
@@ -53,8 +53,8 @@ var WebsocketClass = {
     	var message = {
     		"type" : "generate",
     		"mode" : mode,
-    		"coordinate_x" : x,
-    		"coordinate_z" : y
+    		"coordinate_x" : x.toString(),
+    		"coordinate_z" : y.toString()
     	};
     	console.log("g: "+x+", "+y);
     	this.ws.send(JSON.stringify(message));
@@ -63,16 +63,11 @@ var WebsocketClass = {
     sendDelete : function(x, y){
     	var message = {
     		"type" : "delete",
-    		"coordinate_x" : x,
-    		"coordinate_z" : y
+    		"coordinate_x" : x.toString(),
+    		"coordinate_z" : y.toString()
     	};
     	console.log("d: "+x+", "+y);
     	this.ws.send(JSON.stringify(message));
-    }
-    sendStart : function(){
-    	var message = {
-    		"type" : "start"
-    	};
     }
 }
 
@@ -81,7 +76,7 @@ var WebsocketClass = {
 var Mass = {
 	//関数
 	reverse : function(e){
-		if(e.className === "m_void" && Stage.blocks < Stage.maxBlocks){
+		if(e.className === "m_void" && Stage.blocks < Stage.maxBlocks && search.main(e)){
 			Stage.addBlocks(e);
 		}else if(e.className === "m_block"){
 			Stage.deleteBlocks(e);
@@ -163,8 +158,9 @@ var Stage = {
 			this.blocks += 1;
 			document.getElementById("blocks").innerHTML = this.blocks;
 
-			var x = mass.getAttribute("coordinate_x");
-			var y = mass.getAttribute("coordinate_y");
+			var x = Number(mass.getAttribute("coordinate_x"));
+			var y = Number(mass.getAttribute("coordinate_y"));
+			Stage.stageData[Number(x+y*10)] = 1;
 			WebsocketClass.sendGenerate(1, x, y);
 		}
 		
@@ -177,8 +173,9 @@ var Stage = {
 			this.blocks -= 1;
 			document.getElementById("blocks").innerHTML = this.blocks;
 
-			var x = mass.getAttribute("coordinate_x");
-			var y = mass.getAttribute("coordinate_y");
+			var x = Number(mass.getAttribute("coordinate_x"));
+			var y = Number(mass.getAttribute("coordinate_y"));
+			Stage.stageData[Number(x+y*10)] = 0;
 			WebsocketClass.sendDelete(x, y);
 		}
 	},
@@ -187,8 +184,9 @@ var Stage = {
 		mass.setAttribute("mode", 2);
 		mass.className = "m_wall";
 
-		var x = mass.getAttribute("coordinate_x");
-		var y = mass.getAttribute("coordinate_y");
+		var x = Number(mass.getAttribute("coordinate_x"));
+		var y = Number(mass.getAttribute("coordinate_y"));
+		Stage.stageData[x+y*10] = 2;
 		WebsocketClass.sendGenerate(2, x, y);
 	}
 }
@@ -198,7 +196,6 @@ var Start = {
 	arrayData : [],
 	ready : false,
 	//現在未使用
-	WebsocketClass.start();
 	getArrayData : function(){
 		Start.arrayData = [];
 		console.log(Start.arrayData);
