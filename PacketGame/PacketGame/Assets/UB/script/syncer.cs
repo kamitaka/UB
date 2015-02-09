@@ -18,7 +18,7 @@ public class syncer : MonoBehaviour
 		void Awake ()
 		{
 				messageQueue = Queue.Synchronized (new Queue ());
-				wss = new WebSocket ("ws://192.168.24.57:3001/");
+				wss = new WebSocket ("ws://157.7.65.203:3001/");
 				wss.OnOpen += (o, e) => {
 						Debug.Log ("Open");
 				};
