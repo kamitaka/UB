@@ -27,7 +27,7 @@ var initialize = {
 
 //通信用
 
-kakeru=50;
+kakeru=52;
 var WebsocketClass = {
 	ws : null, 
 	websoketInit : function(){
@@ -38,8 +38,8 @@ var WebsocketClass = {
     	    t = event.data;
     	    obj = JSON.parse(t);
     	    if(obj.type="position"){
-    	    	document.querySelector("#player").style.top =  (Number(obj.position.split(",")[0])*kakeru+8) +"px";
-    	    	document.querySelector("#player").style.left =  (Number(obj.position.split(",")[1])*kakeru+8) +"px";
+    	    	document.querySelector("#player").style.top =  (Number(obj.position.split(",")[0])*kakeru+28) +"px";
+    	    	document.querySelector("#player").style.left =  (Number(obj.position.split(",")[1])*kakeru+28) +"px";
     	    }
     	    console.log(obj.position);
     	    
@@ -67,7 +67,7 @@ var WebsocketClass = {
     		"coordinate_z" : y
     	};
     	console.log("d: "+x+", "+y);
-    	//this.ws.send(JSON.stringify(message));
+    	this.ws.send(JSON.stringify(message));
     }
 }
 
