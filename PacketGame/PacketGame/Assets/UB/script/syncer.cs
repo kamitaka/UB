@@ -18,7 +18,7 @@ public class syncer : MonoBehaviour
 		void Awake ()
 		{
 				messageQueue = Queue.Synchronized (new Queue ());
-				wss = new WebSocket ("ws://157.7.65.203:3001/");
+				wss = new WebSocket ("ws://192.168.24.57:3001/");
 				wss.OnOpen += (o, e) => {
 						Debug.Log ("Open");
 				};
@@ -47,7 +47,7 @@ public class syncer : MonoBehaviour
 								LitJson.JsonData jsonData = LitJson.JsonMapper.ToObject (message.ToString ());
 								Debug.Log ((string)jsonData ["type"]);
 								string type = (string)jsonData ["type"];
-								Debug.Log (type);
+//								Debug.Log (type);
 
 								if (type == "generate") {
 										string position_x = (string)jsonData ["coordinate_x"];
@@ -55,7 +55,7 @@ public class syncer : MonoBehaviour
 
 										float f_position_x = float.Parse (position_x);
 										float f_position_z = float.Parse (position_z);
-										blocks = (GameObject)Instantiate (block_prefab, new Vector3 (f_position_z, 10, f_position_x), block_prefab.transform.rotation) as GameObject;
+										blocks = (GameObject)Instantiate (block_prefab, new Vector3 (f_position_z, 3, f_position_x), block_prefab.transform.rotation) as GameObject;
 										blocks.transform.name = "block_/x="+position_x+"/y="+position_z;
 										blocks.transform.parent = blockparent.transform;
 										Debug.Log (blocks);

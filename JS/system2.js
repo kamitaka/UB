@@ -38,8 +38,8 @@ var WebsocketClass = {
     	    t = event.data;
     	    obj = JSON.parse(t);
     	    if(obj.type="position"){
-    	    	document.querySelector("#player").style.top =  (Number(obj.position.split(",")[0])*kakeru+8) +"px";
-    	    	document.querySelector("#player").style.left =  (Number(obj.position.split(",")[1])*kakeru+8) +"px";
+    	    	document.querySelector("#player").style.top =  (Number(obj.position.split(",")[0])*kakeru+28) +"px";
+    	    	document.querySelector("#player").style.left =  (Number(obj.position.split(",")[1])*kakeru+28) +"px";
     	    }
     	    console.log(obj.position);
     	    
