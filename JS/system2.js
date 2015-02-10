@@ -3,6 +3,7 @@ var initialize = {
 	main : function(){
 		this.stageEdit();
 		WebsocketClass.websoketInit();
+		console.log(Date.now());
 	},
 
 	stageEdit : function(){
@@ -30,8 +31,12 @@ var initialize = {
 kakeru=52;
 var WebsocketClass = {
 	ws : null, 
+	latency : 0,
+	latencyArray : null, 
+
 	websoketInit : function(){
 		this.ws = new WebSocket("ws://192.168.24.57:3001");
+		this.latencyArray = [];
 	     // メッセージ受信時の処理
 	     this.ws.onmessage = function(event){
 	        console.log(event.data);
@@ -40,10 +45,23 @@ var WebsocketClass = {
     	    if(obj.type="position"){
     	    	document.querySelector("#player").style.top =  (Number(obj.position.split(",")[0])*kakeru+28) +"px";
     	    	document.querySelector("#player").style.left =  (Number(obj.position.split(",")[1])*kakeru+28) +"px";
+    	    }else if(obj.type="latency"){
+    	    	this.latencyArray.push(Date.now() - Number(obj.time));
+    	    	this.setLatency();
     	    }
     	    console.log(obj.position);
     	    
     	 }
+    },
+
+    setLatency : function(){
+    	var sum = 0;
+    	var ave = 0;
+    	for(var i=0;i<this.latencyArray.length;i++){
+    		sum += this.latencyArray[i];
+    	}
+
+    	this.latency = sum / this.latencyArray.length;
     },
 
     //mode : "0", "1", or "2"
@@ -98,6 +116,7 @@ var Stage = {
 	maxBlocks: 0,
 	timer : 0.0,
 	gameStart: false,
+	fallSec : 1500,
 
 	loadStage : function(stageNum){
 		if(stageNum === 1){
@@ -154,14 +173,18 @@ var Stage = {
 		if(mass.className === "m_void"){
 			console.log("addBlocks");
 			mass.setAttribute("mode", 1);
-			mass.className = "m_block";
+			mass.className = "m_change";
+			setTimeout(function(){
+				mass.className = "m_block";
+			}, this.fallSec + WebsocketClass.latency);
+			
 			this.blocks += 1;
 			document.getElementById("blocks").innerHTML = this.blocks;
 
 			var x = Number(mass.getAttribute("coordinate_x"));
 			var y = Number(mass.getAttribute("coordinate_y"));
 			Stage.stageData[Number(x+y*10)] = 1;
-			WebsocketClass.sendGenerate(1, x, y);
+			//WebsocketClass.sendGenerate(1, x, y);
 		}
 		
 	},
@@ -169,7 +192,11 @@ var Stage = {
 	deleteBlocks : function(mass){
 		if(mass.className === "m_block"){
 			mass.setAttribute("mode", 0);
-			mass.className = "m_void";
+			mass.className = "m_change";
+			setTimeout(function(){
+				mass.className = "m_void";
+			}, WebsocketClass.latency);
+
 			this.blocks -= 1;
 			document.getElementById("blocks").innerHTML = this.blocks;
 
@@ -187,7 +214,7 @@ var Stage = {
 		var x = Number(mass.getAttribute("coordinate_x"));
 		var y = Number(mass.getAttribute("coordinate_y"));
 		Stage.stageData[x+y*10] = 2;
-		WebsocketClass.sendGenerate(2, x, y);
+		//WebsocketClass.sendGenerate(2, x, y);
 	}
 }
 
