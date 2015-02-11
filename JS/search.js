@@ -1,7 +1,7 @@
 var search = {
 	map : null,
-	map_x : 10,
-	map_y : 10,
+	map_x : 0,
+	map_y : 0,
 
 	start : null,
 
@@ -13,7 +13,7 @@ var search = {
 
 	main : function(mass){
 		this.format();
-		this.loadMap(Stage.stageData);
+		this.loadMap();
 
 		var click_pos = this.getClickPosition(mass);
 		console.log("c " +click_pos);
@@ -51,11 +51,14 @@ var search = {
 		return start_pos;
 	},
 
-	loadMap : function(map){
+	loadMap : function(){
+		var map = Stage.stageData;
 		this.map = [];
 		for(var i=0;i<map.length;i++){
 			this.map[i] = map[i];
 		}
+		this.map_x = Stage.stage_x;
+		this.map_y = Stage.stage_y;
 	},
 
 	searchMap : function(){
@@ -121,8 +124,8 @@ var search = {
 
 	format : function(){
 		this.map = null;
-		this.map_x = 10;
-		this.map_y = 10;
+		this.map_x = 0;
+		this.map_y = 0;
 		this.start = null;
 		this.now = null;
 		this.mark = 9;
