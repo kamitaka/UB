@@ -44,9 +44,9 @@ public class syncer : MonoBehaviour
 				lock (messageQueue.SyncRoot) {
 						if (messageQueue.Count > 0) {
 								var message = messageQueue.Dequeue ();
-								Debug.Log (message);
+//								Debug.Log (message);
 								LitJson.JsonData jsonData = LitJson.JsonMapper.ToObject (message.ToString ());
-								Debug.Log ((string)jsonData ["type"]);
+//								Debug.Log ((string)jsonData ["type"]);
 								string type = (string)jsonData ["type"];
 //								Debug.Log (type);
 
@@ -56,21 +56,25 @@ public class syncer : MonoBehaviour
 
 										float f_position_x = float.Parse (position_x);
 										float f_position_z = float.Parse (position_z);
-										blocks = (GameObject)Instantiate (block_prefab, new Vector3 (f_position_z, 8, f_position_x), block_prefab.transform.rotation) as GameObject;
-										blocks.transform.name = "block_/x="+position_x+"/y="+position_z;
+										blocks = (GameObject)Instantiate (block_prefab, new Vector3 (f_position_z, 5, f_position_x), block_prefab.transform.rotation) as GameObject;
+										blocks.transform.name = "block_/x=" + position_x + "/y=" + position_z;
 										blocks.transform.parent = blockparent.transform;
 										Debug.Log (blocks);
 										block_num++;
 
 										int mode = (int)jsonData ["mode"];
-										Debug.Log("mode = "+mode);
+										Debug.Log ("mode = " + mode);
 										if (mode == 2) {
 												blocks.renderer.material.color = Color.red;
 										}
-								}else if(type=="delete"){
+								} else if (type == "delete") {
 										string position_x = (string)jsonData ["coordinate_x"];
 										string position_z = (string)jsonData ["coordinate_z"];
-										Destroy (GameObject.Find ("block_/x="+position_x+"/y="+position_z));
+										Destroy (GameObject.Find ("block_/x=" + position_x + "/y=" + position_z));
+								} else if (type == "gamestart") {
+										player.GetComponent<CharacterMotor> ().canControl = true;
+								} else if (type == "gamestop") {
+										player.GetComponent<CharacterMotor> ().canControl = false;
 								}
 						}
 						string jsonText = "{ \"type\" : \"position\",  \"position\" : \"" + player.transform.position.x + ","+ player.transform.position.z + "\" }";

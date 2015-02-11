@@ -36,7 +36,7 @@ var WebsocketClass = {
 	latencyArray : null, 
 
 	websoketInit : function(){
-		this.ws = new WebSocket("ws://192.168.24.57:3001");
+		this.ws = new WebSocket("ws://192.168.24.65:3001");
 		this.latencyArray = [];
 	     // メッセージ受信時の処理
 	     this.ws.onmessage = function(event){

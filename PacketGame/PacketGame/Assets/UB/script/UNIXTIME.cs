@@ -3,7 +3,7 @@ using System.Collections;
 using System;
 
 public class UNIXTIME : MonoBehaviour{
-		public syncer websocket;
+	public syncer websocket;
 	private float m_interval = 1;
 	private float m_timer = 0;
 
@@ -15,7 +15,7 @@ public class UNIXTIME : MonoBehaviour{
 		m_timer += Time.deltaTime;
 		if(m_timer > m_interval){
 			m_timer = 0;
-			websocket.wss.Send("{\"latency\", \""+getNowUnixTime()+"\"}");
+						websocket.wss.Send("{\"type\" : \"latency\",\"latency\": \""+getNowUnixTime()+"\"}");
 		}
 	}
 
