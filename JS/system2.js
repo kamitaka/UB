@@ -7,8 +7,8 @@ var initialize = {
 	},
 
 	stageEdit : function(){
-		var x = 10;
-		var y = 10;
+		var x = 13;
+		var y = 13;
 
 		for(var i=0;i<y;i++){
 			for(var j=0;j<x;j++){
@@ -21,6 +21,7 @@ var initialize = {
 				ele.onclick = Mass.clicked;
 				document.getElementById("area").appendChild(ele);
 			}
+			
 		}
 	}
 }
@@ -35,7 +36,7 @@ var WebsocketClass = {
 	latencyArray : null, 
 
 	websoketInit : function(){
-		this.ws = new WebSocket("ws://192.168.24.57:3001");
+		this.ws = new WebSocket("ws://157.7.65.203:3001");
 		this.latencyArray = [];
 	     // メッセージ受信時の処理
 	     this.ws.onmessage = function(event){
@@ -112,6 +113,9 @@ var Mass = {
 //ステージを更新したり
 var Stage = {
 	stageData : null,
+	stage_x : 0,
+	stage_y : 0,
+
 	blocks: 0,
 	maxBlocks: 0,
 	timer : 0.0,
@@ -121,6 +125,8 @@ var Stage = {
 	loadStage : function(stageNum){
 		if(stageNum === 1){
 			this.stageData = Stage1.mapData;
+			this.stage_x = Stage1.stage_x;
+			this.stage_y = Stage1.stage_y;
 			this.changeMax(Stage1.maxBlocks);
 			this.setTimer(Stage1.timeLimit);
 		}
@@ -183,7 +189,7 @@ var Stage = {
 
 			var x = Number(mass.getAttribute("coordinate_x"));
 			var y = Number(mass.getAttribute("coordinate_y"));
-			Stage.stageData[Number(x+y*10)] = 1;
+			Stage.stageData[Number(x+y*this.stage_x)] = 1;
 			//WebsocketClass.sendGenerate(1, x, y);
 		}
 		
@@ -202,7 +208,7 @@ var Stage = {
 
 			var x = Number(mass.getAttribute("coordinate_x"));
 			var y = Number(mass.getAttribute("coordinate_y"));
-			Stage.stageData[Number(x+y*10)] = 0;
+			Stage.stageData[Number(x+y*this.stage_x)] = 0;
 			WebsocketClass.sendDelete(x, y);
 		}
 	},
@@ -213,7 +219,7 @@ var Stage = {
 
 		var x = Number(mass.getAttribute("coordinate_x"));
 		var y = Number(mass.getAttribute("coordinate_y"));
-		Stage.stageData[x+y*10] = 2;
+		Stage.stageData[x+y*this.stage_x] = 2;
 		//WebsocketClass.sendGenerate(2, x, y);
 	}
 }
