@@ -8,6 +8,8 @@ public class syncer : MonoBehaviour
 		// Use this for initialization
 		public GameObject player;
 		public GameObject block_prefab;
+		public GameObject goal_prefab;
+		private GameObject goal;
 		public GameObject blocks;
 		public GameObject blockparent;
 		private Queue messageQueue;
@@ -56,13 +58,19 @@ public class syncer : MonoBehaviour
 
 										float f_position_x = float.Parse (position_x);
 										float f_position_z = float.Parse (position_z);
-										blocks = (GameObject)Instantiate (block_prefab, new Vector3 (f_position_z, 5, f_position_x), block_prefab.transform.rotation) as GameObject;
-										blocks.transform.name = "block_/x=" + position_x + "/y=" + position_z;
-										blocks.transform.parent = blockparent.transform;
+										int mode = (int)jsonData ["mode"];
+										if (mode != 3) {
+												blocks = (GameObject)Instantiate (block_prefab, new Vector3 (f_position_z, 5, f_position_x), block_prefab.transform.rotation) as GameObject;
+												blocks.transform.name = "block_/x=" + position_x + "/y=" + position_z;
+												blocks.transform.parent = blockparent.transform;
+										} else {
+												goal = (GameObject)Instantiate (block_prefab, new Vector3 (f_position_z, 5, f_position_x), block_prefab.transform.rotation) as GameObject;
+												blocks.transform.name = "goal";
+										}
 										Debug.Log (blocks);
 										block_num++;
 
-										int mode = (int)jsonData ["mode"];
+
 										Debug.Log ("mode = " + mode);
 										if (mode == 2) {
 												blocks.renderer.material.color = Color.red;
