@@ -48,6 +48,7 @@
   <ItemGroup>
      <Compile Include="Assets\Jtest.cs" />
      <Compile Include="Assets\UB\script\PlayerCharactor.cs" />
+     <Compile Include="Assets\UB\script\UNIXTIME.cs" />
      <Compile Include="Assets\UB\script\controller.cs" />
      <Compile Include="Assets\UB\script\syncer.cs" />
      <Compile Include="Assets\tekitou.cs" />

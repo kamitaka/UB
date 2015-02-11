@@ -11,14 +11,15 @@ public class syncer : MonoBehaviour
 		public GameObject blocks;
 		public GameObject blockparent;
 		private Queue messageQueue;
-		private WebSocket wss;
+		public WebSocket wss;
+		public string ipAddress;
 		private int num;
 		private byte[] test = new byte[1];
 
 		void Awake ()
 		{
 				messageQueue = Queue.Synchronized (new Queue ());
-				wss = new WebSocket ("ws://172.24.36.201:3001/");
+				wss = new WebSocket ("ws://"+ ipAddress +":3001/");
 				wss.OnOpen += (o, e) => {
 						Debug.Log ("Open");
 				};

@@ -36,16 +36,8 @@ var WebsocketClass = {
 	latencyArray : null, 
 
 	websoketInit : function(){
-<<<<<<< HEAD
-<<<<<<< HEAD
-		this.ws = new WebSocket("ws://157.7.65.203:3001");
-=======
 		this.ws = new WebSocket("ws://192.168.24.57:3001");
-=======
-		this.ws = new WebSocket("ws://157.7.65.203:3001");
->>>>>>> 8335d1a3a8681707aecda12b1ebaedff1ea26d76
 		this.latencyArray = [];
->>>>>>> 562bbeb458fece45701b8404a76ddc90d1138ccd
 	     // メッセージ受信時の処理
 	     this.ws.onmessage = function(event){
 	        console.log(event.data);
@@ -198,7 +190,7 @@ var Stage = {
 			var x = Number(mass.getAttribute("coordinate_x"));
 			var y = Number(mass.getAttribute("coordinate_y"));
 			Stage.stageData[Number(x+y*this.stage_x)] = 1;
-			//WebsocketClass.sendGenerate(1, x, y);
+			WebsocketClass.sendGenerate(1, x, y);
 		}
 		
 	},
@@ -228,7 +220,7 @@ var Stage = {
 		var x = Number(mass.getAttribute("coordinate_x"));
 		var y = Number(mass.getAttribute("coordinate_y"));
 		Stage.stageData[x+y*this.stage_x] = 2;
-		//WebsocketClass.sendGenerate(2, x, y);
+		WebsocketClass.sendGenerate(2, x, y);
 	}
 }
 
