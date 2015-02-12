@@ -46,16 +46,19 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\DeathButton.cs" />
      <Compile Include="Assets\Jtest.cs" />
      <Compile Include="Assets\UB\script\PlayerCharactor.cs" />
      <Compile Include="Assets\UB\script\UNIXTIME.cs" />
      <Compile Include="Assets\UB\script\controller.cs" />
      <Compile Include="Assets\UB\script\syncer.cs" />
      <Compile Include="Assets\marioAction.cs" />
+     <Compile Include="Assets\standby.cs" />
      <Compile Include="Assets\tekitou.cs" />
      <Compile Include="Assets\touch_of_death.cs" />
      <Compile Include="Assets\touch_of_goal.cs" />
      <Compile Include="Assets\ws.cs" />
+     <None Include="Assets\Standard Assets\Skyboxes\_skybox info.txt" />
  <Reference Include="UnityEngine.UI">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/GUISystem/4.6.1/UnityEngine.UI.dll</HintPath>
  </Reference>

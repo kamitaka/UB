@@ -9,7 +9,7 @@ public class touch_of_goal : MonoBehaviour {
 		}
 
 		void OnTriggerEnter(Collider other){
-				Debug.Log (other.transform.name);
+//				Debug.Log (other.transform.name);
 				if (other.transform.name=="Player") {
 						Application.LoadLevel ("clear");
 						websocket.wss.Send("{\"type\" : \"gamestop\"}");

@@ -37,6 +37,7 @@ public class syncer : MonoBehaviour
 		void Start ()
 		{
 				num = Random.Range (0, 20);
+				wss.Send("{\"type\" : \"unityready\"}");
 		}
 
 		int block_num = 0;
@@ -64,14 +65,14 @@ public class syncer : MonoBehaviour
 												blocks.transform.name = "block_/x=" + position_x + "/y=" + position_z;
 												blocks.transform.parent = blockparent.transform;
 										} else {
-												goal = (GameObject)Instantiate (block_prefab, new Vector3 (f_position_z, 5, f_position_x), block_prefab.transform.rotation) as GameObject;
-												blocks.transform.name = "goal";
+												goal = (GameObject)Instantiate (goal_prefab, new Vector3 (f_position_z, 5, f_position_x), goal_prefab.transform.rotation) as GameObject;
+												goal.transform.name = "goal";
 										}
-										Debug.Log (blocks);
+//										Debug.Log (blocks);
 										block_num++;
 
 
-										Debug.Log ("mode = " + mode);
+//										Debug.Log ("mode = " + mode);
 										if (mode == 2) {
 												blocks.renderer.material.color = Color.red;
 										}

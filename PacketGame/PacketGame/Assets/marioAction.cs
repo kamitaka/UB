@@ -17,10 +17,8 @@ public class marioAction : MonoBehaviour {
 				}
 				if (Input.GetKeyDown (KeyCode.A)) {
 						transform.Rotate(new Vector3(0, -90, 0));
-						Debug.Log ("a");
 				}else if(Input.GetKeyUp (KeyCode.A)){
 						transform.Rotate(new Vector3(0, 90, 0));
-						Debug.Log ("a");
 				}
 				if (Input.GetKeyDown (KeyCode.D)) {
 						transform.Rotate(new Vector3(0, 90, 0));
